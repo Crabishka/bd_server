@@ -3,6 +3,7 @@ from functools import wraps
 import json
 import get_info
 import os
+import restart
 
 from dump import dump_schema
 
@@ -31,7 +32,8 @@ def api_key_required(f):
 @app.route('/restart_db')
 @api_key_required
 def restart_db():
-    return 'hello'
+    restart.restart_db()
+    return 'OK', 200
 
 
 @app.route('/restore_db')
