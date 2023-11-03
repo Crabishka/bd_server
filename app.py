@@ -3,6 +3,8 @@ from functools import wraps
 import get_info
 import os
 
+import restart
+
 app = Flask(__name__)
 
 
@@ -19,8 +21,9 @@ def api_key_required(f):
 
 @app.route('/restart_db')
 @api_key_required
-def get_metrics():  # put application's code here
-    return 'hello'
+def restart_db():
+    restart.restart_db()
+    return 'OK', 200
 
 
 @app.route('/restore_db')
