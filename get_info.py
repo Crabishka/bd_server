@@ -6,7 +6,6 @@ import psycopg2 as psycopg2
 
 sql_item = {
     'Alive': "select 1;",  # monitor survival
-    'timestamp': "SELECT current_timestamp - pg_postmaster_start_time();",
     'Cache hit ratio': "SELECT sum(heap_blks_hit) / (sum(heap_blks_hit) + sum(heap_blks_read)) as ratio FROM pg_statio_user_tables;",
     'Active_connections': "select count (*) from pg_stat_activity where state = 'active';",
     'Server_connections': "select count (*) from pg_stat_activity where backend_type = 'client backend'",
@@ -94,7 +93,9 @@ def get_custom_query(query):
 
 
 def get_info():
-    result = {}
+    result = []
     for key, value in sql_item.items():
-        result[key] = get_item(key)
+        item = get_item(key)
+        if item is not None:
+            result.append(get_item(key))
     return result
