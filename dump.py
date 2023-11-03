@@ -17,6 +17,8 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
     docker_command_extension = ''
     if bd_docker_name is not None and bd_docker_name != "":
         docker_command_extension = f'docker exec -i {bd_docker_name} /usr/bin/'
+    command = f'touch path'
+    proc = Popen(command, shell=True)
     command = f'{docker_command_extension}pg_dump --host={host} ' \
               f'--dbname={dbname} ' \
               f'--username={user} ' \
