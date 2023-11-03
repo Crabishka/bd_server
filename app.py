@@ -51,7 +51,7 @@ def dump_db():
 @api_key_required
 def get_metrics():
     result = get_info.get_info()
-    json_data = json.dumps(result, default=str)
+    json_data = json.dumps(result, default=float)
     return json_data
 
 
