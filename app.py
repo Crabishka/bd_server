@@ -1,6 +1,6 @@
 from flask import Flask, request
 from functools import wraps
-
+import json
 import get_info
 import os
 
@@ -51,7 +51,8 @@ def dump_db():
 @api_key_required
 def get_metrics():
     result = get_info.get_info()
-    return result
+    json_data = json.dumps(result, default=str)
+    return json_data
 
 
 if __name__ == '__main__':

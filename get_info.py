@@ -58,7 +58,6 @@ def get_custom_query(query):
         cursor = connection.cursor()
         cursor.execute(query)
         rows = cursor.fetchall()
-        columns = [desc[0] for desc in cursor.description]
         return rows[0][0]
     except Exception as e:
         print(e)
