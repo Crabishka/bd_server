@@ -15,7 +15,7 @@ os.environ['PGUSERNAME'] = "postgres"
 os.environ['PGPASSWORD'] = "hCImjO&&k6N$"
 os.environ['PGDATABASE'] = "postgres"
 os.environ['PGBACKUPPATH'] = "/backup"
-os.environ['DBDOCKERNAME'] = ''
+os.environ['DBDOCKERNAME'] = 'full_db'
 os.environ['DBDOCKERDBNAME'] = 'full_db'
 os.environ['DBDOCKERLOCATION'] = '/var/lib/jenkins/workspace/backend/docker-compose.yaml'
 app = Flask(__name__)
@@ -50,7 +50,7 @@ def restore_db():
 def dump_db():
     path = request.get_json()['file']
     dump_schema(path)
-    return 'success'
+    return 'OK', 200
 
 
 @app.route('/get_metrics')
