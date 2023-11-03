@@ -46,6 +46,7 @@ def restore_db():
 def dump_db():
     path = request.get_json()['file']
     dump_schema(path)
+    return 'success'
 
 
 @app.route('/get_metrics')
