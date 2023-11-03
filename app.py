@@ -6,6 +6,14 @@ import os
 
 from dump import dump_schema
 
+os.environ['API_KEY'] = "1234567890"
+os.environ['PGHOSTNAME'] = "92.53.127.18"
+os.environ['PGPORT'] = "5432"
+os.environ['PGUSERNAME'] = "postgres"
+os.environ['PGPASSWORD'] = "hCImjO&&k6N$"
+os.environ['PGDATABASE'] = "postgres"
+os.environ['PGBACKUPPATH'] = "/backup"
+os.environ['DBDOCKERNAME'] = ''
 app = Flask(__name__)
 
 
@@ -55,12 +63,4 @@ def get_metrics():
 
 if __name__ == '__main__':
     # костыль
-    os.environ['API_KEY'] = "1234567890"
-    os.environ['PGHOSTNAME'] = "92.53.127.18"
-    os.environ['PGPORT'] = "5432"
-    os.environ['PGUSERNAME'] = "postgres"
-    os.environ['PGPASSWORD'] = "hCImjO&&k6N$"
-    os.environ['PGDATABASE'] = "postgres"
-    os.environ['PGBACKUPPATH'] = "/backup"
-    os.environ['DBDOCKERNAME'] = ''
     app.run()
