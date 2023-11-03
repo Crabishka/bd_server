@@ -1,11 +1,20 @@
 from flask import Flask, request
 from functools import wraps
+
 import get_info
-from config import docker_bd_image
 import os
+
+from dump import dump_schema
 
 app = Flask(__name__)
 
+
+# host = os.environ['PGHOSTNAME']
+# port = os.environ['PGPORT']
+# username = os.environ['PGUSERNAME']
+# password = os.environ['PGPASSWORD']
+# database = os.environ['PGDATABASE']
+# path_to_backup = os.environ['PGBACKUPPATH']
 
 def api_key_required(f):
     @wraps(f)
@@ -33,8 +42,8 @@ def restore_db():
 @app.route('/dump_db')
 @api_key_required
 def dump_db():
-    if docker_bd_image is not None:
-        return 'hello'
+    path = request.get_json()['file']
+    dump_schema(path)
 
 
 @app.route('/get_metrics')
@@ -45,4 +54,4 @@ def get_metrics():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='92.53.127.18', port=5000)

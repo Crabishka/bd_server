@@ -1,6 +1,6 @@
-import psycopg2 as psycopg2
+import os
 
-from config import password, username, host, port, database
+import psycopg2 as psycopg2
 
 sql_item = {
     'Alive': "select 1;",  # monitor survival
@@ -28,7 +28,6 @@ sql_item = {
     # 'pg_stat_activity': "SELECT * FROM pg_stat_activity"
 }
 
-
 sql_items_from_file = {
 
 }
@@ -48,11 +47,11 @@ def get_custom_query(query):
     cursor = None
     try:
         connection = psycopg2.connect(
-            user=username,
-            password=password,
-            host=host,
-            port=port,
-            database=database
+            user=os.environ['PGUSERNAME'],
+            password=os.environ['PGPASSWORD'],
+            host=os.environ['PGHOSTNAME'],
+            port=os.environ['PGPORT'],
+            database=os.environ['PGDATABASE']
         )
         cursor = connection.cursor()
         cursor.execute(query)
