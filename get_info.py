@@ -1,10 +1,12 @@
 import os
+import time
+from datetime import date, datetime
 
 import psycopg2 as psycopg2
 
 sql_item = {
     'Alive': "select 1;",  # monitor survival
-    # 'Uptime': "SELECT current_timestamp - pg_postmaster_start_time();",
+    'timestamp': "SELECT current_timestamp - pg_postmaster_start_time();",
     'Cache hit ratio': "SELECT sum(heap_blks_hit) / (sum(heap_blks_hit) + sum(heap_blks_read)) as ratio FROM pg_statio_user_tables;",
     'Active_connections': "select count (*) from pg_stat_activity where state = 'active';",
     'Server_connections': "select count (*) from pg_stat_activity where backend_type = 'client backend'",
@@ -36,7 +38,32 @@ sql_items_from_file = {
 
 
 def get_item(item_key):
-    return get_custom_query(sql_item[item_key])
+    query = sql_item[item_key]
+    connection = None
+    cursor = None
+    try:
+        result = {}
+        now = datetime.now()
+        formatted_date = now.strftime("%d.%m.%Y %H:%M:%S")
+        connection = psycopg2.connect(
+            user=os.environ['PGUSERNAME'],
+            password=os.environ['PGPASSWORD'],
+            host=os.environ['PGHOSTNAME'],
+            port=os.environ['PGPORT'],
+            database=os.environ['PGDATABASE']
+        )
+        cursor = connection.cursor()
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        result['timestamp'] = formatted_date
+        result['name'] = item_key
+        result['value'] = float(rows[0][0])
+        return result
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close()
+        connection.close()
 
 
 def get_from_file(file_path):
