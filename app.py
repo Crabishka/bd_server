@@ -6,6 +6,7 @@ import os
 
 from dump import dump_schema
 
+# костыль
 os.environ['API_KEY'] = "1234567890"
 os.environ['PGHOSTNAME'] = "92.53.127.18"
 os.environ['PGPORT'] = "5432"
@@ -56,5 +57,4 @@ def get_metrics():
 
 
 if __name__ == '__main__':
-    # костыль
     app.run()
