@@ -15,6 +15,8 @@ os.environ['PGPASSWORD'] = "hCImjO&&k6N$"
 os.environ['PGDATABASE'] = "postgres"
 os.environ['PGBACKUPPATH'] = "/backup"
 os.environ['DBDOCKERNAME'] = ''
+os.environ['DBDOCKERDBNAME'] = 'full_db'
+os.environ['DBDOCKERLOCATION'] = '/var/lib/jenkins/workspace/backend/docker-compose.yaml'
 app = Flask(__name__)
 
 
