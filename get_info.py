@@ -1,6 +1,6 @@
 import psycopg2 as psycopg2
 
-from config import password, username, host, port
+from config import password, username, host, port, database
 
 sql_item = {
     'Alive': "select 1;",  # monitor survival
@@ -51,7 +51,8 @@ def get_custom_query(query):
             user=username,
             password=password,
             host=host,
-            port=port
+            port=port,
+            database=database
         )
         cursor = connection.cursor()
         cursor.execute(query)

@@ -1,6 +1,7 @@
 from flask import Flask, request
 from functools import wraps
 import get_info
+from config import docker_bd_image
 import os
 
 app = Flask(__name__)
@@ -19,25 +20,26 @@ def api_key_required(f):
 
 @app.route('/restart_db')
 @api_key_required
-def get_metrics():  # put application's code here
+def restart_db():
     return 'hello'
 
 
 @app.route('/restore_db')
 @api_key_required
-def get_metrics():  # put application's code here
+def restore_db():
     return 'hello'
 
 
 @app.route('/dump_db')
 @api_key_required
-def get_metrics():  # put application's code here
-    return 'hello'
+def dump_db():
+    if docker_bd_image is not None:
+        return 'hello'
 
 
 @app.route('/get_metrics')
 @api_key_required
-def get_metrics():  # put application's code here
+def get_metrics():
     result = get_info.get_info()
     return result
 
