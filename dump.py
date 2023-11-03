@@ -20,10 +20,10 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
     command = f'{docker_command_extension}pg_dump --host={host} ' \
               f'--dbname={dbname} ' \
               f'--username={user} ' \
-              f'--no-password ' \
               f'> {path} '
     print(command)
     proc = Popen(command, shell=True, env={
         'PGPASSWORD': password
     })
-    proc.wait()
+    return proc.communicate(password)
+
