@@ -3,6 +3,7 @@ from functools import wraps
 import json
 import get_info
 import os
+import restart
 
 from dump import dump_schema
 
@@ -14,6 +15,8 @@ os.environ['PGPASSWORD'] = "hCImjO&&k6N$"
 os.environ['PGDATABASE'] = "postgres"
 os.environ['PGBACKUPPATH'] = "/backup"
 os.environ['DBDOCKERNAME'] = ''
+os.environ['DBDOCKERDBNAME'] = 'full_db'
+os.environ['DBDOCKERLOCATION'] = '/var/lib/jenkins/workspace/backend/docker-compose.yaml'
 app = Flask(__name__)
 
 
@@ -31,7 +34,8 @@ def api_key_required(f):
 @app.route('/restart_db')
 @api_key_required
 def restart_db():
-    return 'hello'
+    restart.restart_db()
+    return 'OK', 200
 
 
 @app.route('/restore_db')
