@@ -22,7 +22,7 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
               f'--username={user} ' \
               f'> {path} '
     print(command)
-    proc = Popen(command, shell=True, env={
+    proc = Popen(command, shell=False, env={
         'PGPASSWORD': password
     })
     return proc.communicate(password)
