@@ -11,4 +11,6 @@ def restart_db():
               f'{bd_docker_name}'
 
     proc = Popen(command, shell=True, )
-    proc.wait()
+    status = proc.wait()
+    if status:
+        raise Exception('Error while restart')
