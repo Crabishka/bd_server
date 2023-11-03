@@ -4,6 +4,8 @@ import psycopg2 as psycopg2
 
 sql_item = {
     'Alive': "select 1;",  # monitor survival
+    # 'Uptime': "SELECT current_timestamp - pg_postmaster_start_time();",
+    'Cache hit ratio': "SELECT sum(heap_blks_hit) / (sum(heap_blks_hit) + sum(heap_blks_read)) as ratio FROM pg_statio_user_tables;",
     'Active_connections': "select count (*) from pg_stat_activity where state = 'active';",
     'Server_connections': "select count (*) from pg_stat_activity where backend_type = 'client backend'",
     'Idle_connections': "select count (*) from pg_stat_activity where state = 'idle'",
@@ -57,7 +59,7 @@ def get_custom_query(query):
         cursor.execute(query)
         rows = cursor.fetchall()
         columns = [desc[0] for desc in cursor.description]
-        return [dict(zip(columns, row)) for row in rows]
+        return rows[0][0]
     except Exception as e:
         print(e)
     finally:

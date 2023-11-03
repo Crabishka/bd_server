@@ -17,13 +17,6 @@ os.environ['DBDOCKERNAME'] = ''
 app = Flask(__name__)
 
 
-# host = os.environ['PGHOSTNAME']
-# port = os.environ['PGPORT']
-# username = os.environ['PGUSERNAME']
-# password = os.environ['PGPASSWORD']
-# database = os.environ['PGDATABASE']
-# path_to_backup = os.environ['PGBACKUPPATH']
-
 def api_key_required(f):
     @wraps(f)
     def wrapped_view(**kwargs):
