@@ -65,7 +65,7 @@ def _restore_schema(host, dbname, user, password, path, **kwargs):
     command = f'docker compose -f {bd_docker_compose} ' \
               f'exec {bd_docker_name} ' \
               f'pg_restore -U {user} ' \
-              f'-h {host}' \
+              f'-h {host} ' \
               f'-d {dbname}' \
               f' backups/{path}'
     print(command, "\n")
