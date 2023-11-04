@@ -3,6 +3,8 @@ import subprocess
 import time
 from subprocess import Popen, PIPE
 
+import pexpect
+
 
 def dump_schema(path="test.sql"):
     _dump_schema(
@@ -22,7 +24,7 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
     os.makedirs('./backups', exist_ok=True)
     execute_command(f'docker compose -f {bd_docker_compose} exec {bd_docker_name} mkdir -p backups')
 
-    proc = execute_command_with_result(
+    child = pexpect.spawn(
         f'docker compose -f {bd_docker_compose} '
         f'exec {bd_docker_name} '
         f'pg_dump -U {user} '
@@ -31,8 +33,7 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
         f' -f backups/{path}')
     time.sleep(1)
     password += "\n"
-    print(password)
-    proc.communicate(password)
+    child.sendline(password)
 
     execute_command(
         f'docker compose -f {bd_docker_compose} cp {bd_docker_name}:/backups/{path} backups/{path}')
