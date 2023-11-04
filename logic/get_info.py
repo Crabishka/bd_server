@@ -1,3 +1,4 @@
+import re
 import string
 import time
 
@@ -50,9 +51,8 @@ def get_item(item_key):
         result['name'] = item_key
         # да, костыль
         if item_key == 'Size':
-
-            size = rows[0][0].translate(rows[0][0], string.digits)
-            result['value'] = float(size) * 1024 * 1024 * 8
+            size = re.sub('\D', '', rows[0][0])
+            result['value'] = float(size) * 1024 * 1024
         else:
             result['value'] = float(rows[0][0])
         return result
