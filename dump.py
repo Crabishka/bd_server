@@ -28,9 +28,10 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
         f'docker compose -f {bd_docker_compose} cp {bd_docker_name}:/home/postgres/backups/{path} backups/{path}')
     # proc = execute_command_with_result(f'/var/lib/docker compose -f {bd_docker_compose} exec {bd_docker_name} rm backups/{path}')
     child = pexpect.spawn(f'/var/lib/docker compose -f {bd_docker_compose} exec {bd_docker_name} rm backups/{path}')
-    child.expect("Password:")
+    child.expect('[pP]assword:')
     child.sendline(password)
-    child.wait()
+    print(child.before)
+    child.expect(pexpect.EOF)
     print('Бекап создан', f'backups/{path}')
     return
 
@@ -39,7 +40,7 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
     #           f'--username={user} ' \
     #           f'--inserts ' \
     #           f'--file=/tmp/schema.dmp ' \
-    #           f'> {path} '
+
     # print(command)
     # proc = Popen(command, shell=False, stdin=PIPE, stdout=PIPE, stderr=PIPE)
     # return proc.communicate(password)
