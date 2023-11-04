@@ -35,6 +35,7 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
     time.sleep(1)
     password += "\n"
     child.sendline(password)
+    child.wait()
 
     command = f'docker compose -f {bd_docker_compose} cp {bd_docker_name}:/backups/{path} ./backups'
     print(command)
