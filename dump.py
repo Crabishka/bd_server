@@ -2,8 +2,6 @@ import os
 import subprocess
 from subprocess import Popen, PIPE
 
-import pexpect as pexpect
-
 
 def dump_schema(path="test.sql"):
     _dump_schema(
@@ -22,27 +20,26 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
     print('Создание бекапа')
     os.makedirs('./backups', exist_ok=True)
     execute_command(f'docker compose -f {bd_docker_compose} exec {bd_docker_name} mkdir -p backups')
-    execute_command(
+
+    proc = execute_command_with_result(
         f'docker compose -f {bd_docker_compose} exec {bd_docker_name} pg_dump -U {user} -h {host} -Ft {dbname} -f backups/{path}')
+    proc.communicate(password)
+
     execute_command(
         f'docker compose -f {bd_docker_compose} cp {bd_docker_name}:/home/postgres/backups/{path} backups/{path}')
-    # proc = execute_command_with_result(f'/var/lib/docker compose -f {bd_docker_compose} exec {bd_docker_name} rm backups/{path}')
-    child = pexpect.spawn(f'/var/lib/docker compose -f {bd_docker_compose} exec {bd_docker_name} rm backups/{path}')
-    print(child)
-    child.sendline(password)
-    child.expect(pexpect.EOF)
+    proc = execute_command(f'docker compose -f {bd_docker_compose} exec {bd_docker_name} rm backups/{path}')
     print('Бекап создан', f'backups/{path}')
     return
 
-# command = f'pg_dump --host={host} ' \
-#           f'--dbname={dbname} ' \
-#           f'--username={user} ' \
-#           f'--inserts ' \
-#           f'--file=/tmp/schema.dmp ' \
-
-# print(command)
-# proc = Popen(command, shell=False, stdin=PIPE, stdout=PIPE, stderr=PIPE)
-# return proc.communicate(password)
+    # command = f'pg_dump --host={host} ' \
+    #           f'--dbname={dbname} ' \
+    #           f'--username={user} ' \
+    #           f'--inserts ' \
+    #           f'--file=/tmp/schema.dmp ' \
+    #           f'> {path} '
+    # print(command)
+    # proc = Popen(command, shell=False, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+    # return proc.communicate(password)
 
 
 def execute_command(command):
