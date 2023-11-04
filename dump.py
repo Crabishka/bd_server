@@ -29,9 +29,8 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
         f'-h {host}'
         f' -Ft {dbname} '
         f' -f backups/{path}')
-    print(password)
     time.sleep(1)
-    proc.communicate(password)
+    proc.communicate(f'{password}\n')
 
     execute_command(
         f'docker compose -f {bd_docker_compose} cp {bd_docker_name}:/home/postgres/backups/{path} backups/{path}')
