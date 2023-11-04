@@ -21,7 +21,7 @@ def get_dumps():
         file_stat = os.stat(file_path)
         file_size = file_stat.st_size
         file_datetime = int(file_stat.st_ctime)
-        file_info = {"name": filename, "datetime": file_datetime, "size" : file_size}
+        file_info = {"name": filename, "datetime": file_datetime, "size": file_size}
         print(file_info)
         result.append(file_info)
     return result
@@ -58,7 +58,7 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
     command = f'docker compose -f {bd_docker_compose} ' \
               f'exec {bd_docker_name} ' \
               f'pg_dump -U {user} ' \
-              f'-h {host}' \
+              f'-h {host} --clean ' \
               f' -Ft {dbname} ' \
               f' -f backups/{path}'
     print(command, "\n")
@@ -73,7 +73,6 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
     execute_command(command)
     # execute_command(f'docker compose -f {bd_docker_compose} exec {bd_docker_name}  backups/{path}')
     print('Бекап создан', f'backups/{path}')
-    return
 
 
 def _restore_schema(host, dbname, user, password, path, **kwargs):
@@ -87,7 +86,7 @@ def _restore_schema(host, dbname, user, password, path, **kwargs):
               f'exec {bd_docker_name} ' \
               f'pg_restore -U {user} ' \
               f'-h {host} ' \
-              f'-d {dbname}' \
+              f'-d {dbname} --clean ' \
               f' backups/{path}'
     print(command, "\n")
     child = pexpect.spawn(command)
