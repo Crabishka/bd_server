@@ -2,6 +2,8 @@ import os
 import subprocess
 from subprocess import Popen, PIPE
 
+import pexpect as pexpect
+
 
 def dump_schema(path="test.sql"):
     _dump_schema(
@@ -24,9 +26,12 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
         f'docker compose -f {bd_docker_compose} exec {bd_docker_name} pg_dump -U {user} -h {host} -Ft {dbname} -f backups/{path}')
     execute_command(
         f'docker compose -f {bd_docker_compose} cp {bd_docker_name}:/home/postgres/backups/{path} backups/{path}')
-    proc = execute_command_with_result(f'/var/lib/docker compose -f {bd_docker_compose} exec {bd_docker_name} rm backups/{path}')
+    # proc = execute_command_with_result(f'/var/lib/docker compose -f {bd_docker_compose} exec {bd_docker_name} rm backups/{path}')
+    child = pexpect.spawn(f'/var/lib/docker compose -f {bd_docker_compose} exec {bd_docker_name} rm backups/{path}')
+    child.expect("Password:")
+    child.sendline(password)
     print('Бекап создан', f'backups/{path}')
-    return proc.communicate(password)
+    return
 
     # command = f'pg_dump --host={host} ' \
     #           f'--dbname={dbname} ' \
