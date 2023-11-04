@@ -18,7 +18,7 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
     bd_docker_name = os.environ['DBDOCKERDBNAME']
     bd_docker_compose = os.environ['DBDOCKERLOCATION']
     print('Создание бекапа')
-    execute_command('mkdir -p backups')
+    os.makedirs('./backups', exist_ok=True)
     execute_command(f'docker compose -f {bd_docker_compose} exec {bd_docker_name} mkdir -p backups')
     execute_command(
         f'docker compose -f {bd_docker_compose} exec {bd_docker_name} pg_dump -Ft {dbname} -f backups/{path}')
