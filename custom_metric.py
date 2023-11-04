@@ -52,7 +52,6 @@ def get_custom_query(query, parse_fund):
 
 
 def parse_curr_longest_transaction(item):
-
     longest_info = {
         "pid": item['pid'],
         "query": item['query'][:100],
