@@ -27,7 +27,6 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
         f'pg_dump -U {user} '
         f'-h {host}'
         f' -Ft {dbname} '
-        f'--no-password'
         f' -f backups/{path}')
     proc.communicate(password)
 
