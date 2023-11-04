@@ -9,9 +9,9 @@ def get_hardware_utils():
     proc = Popen(f'{command} > tmp', shell=True)
     proc.wait()
     data = open('tmp', 'r').read()
-    print(data)
     if data != "":
         hardware_data = json.loads(data)
+        print(hardware_data)
         return hardware_data
     return {}
 
