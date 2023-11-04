@@ -61,8 +61,10 @@ def get_info():
         now = int(time.time())
         max_value = None
         if '/' in value:
-            value = value.split('/')[0].strip()
-            max_value = value.split('/')[1].strip()
+            splitted = value.split('/')
+            print(splitted)
+            value = splitted[0].strip()
+            max_value = splitted[1].strip()
         data = {'timestamp': now, 'name': key, 'value': value, 'max_value': max_value}
         result.append(data)
     return result
