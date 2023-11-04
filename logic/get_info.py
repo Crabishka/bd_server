@@ -59,6 +59,10 @@ def get_info():
             result.append(get_item(key))
     for key, value in get_hardware_utils().items():
         now = int(time.time())
-        data = {'timestamp': now, 'name': key, 'value': value}
+        max_value = None
+        if '/' in value:
+            value = key.split('/')[0].strip()
+            max_value = key.split('/')[1].strip()
+        data = {'timestamp': now, 'name': key, 'value': value, 'max_value': max_value}
         result.append(data)
     return result
