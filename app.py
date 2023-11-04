@@ -89,7 +89,7 @@ def get_metrics():
 @api_key_required
 def get_dumps():
     result = dump.get_dumps()
-    return result
+    return json.dumps(result)
 
 
 if __name__ == '__main__':
