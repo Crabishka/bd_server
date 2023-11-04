@@ -38,7 +38,7 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
 
     execute_command(
         f'docker compose -f {bd_docker_compose} cp {bd_docker_name}:/backups/{path} backups/{path}')
-    execute_command(f'docker compose -f {bd_docker_compose} exec {bd_docker_name} rm backups/{path}')
+    # execute_command(f'docker compose -f {bd_docker_compose} exec {bd_docker_name}  backups/{path}')
     print('Бекап создан', f'backups/{path}')
     return
 
