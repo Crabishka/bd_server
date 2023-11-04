@@ -24,7 +24,7 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
         f'docker compose -f {bd_docker_compose} exec {bd_docker_name} pg_dump -U {user} -h {host} -Ft {dbname} -f backups/{path}')
     execute_command(
         f'docker compose -f {bd_docker_compose} cp {bd_docker_name}:/home/postgres/backups/{path} backups/{path}')
-    proc = execute_command(f'/var/lib/docker compose -f {bd_docker_compose} exec {bd_docker_name} rm backups/{path}')
+    proc = execute_command_with_result(f'/var/lib/docker compose -f {bd_docker_compose} exec {bd_docker_name} rm backups/{path}')
     print('Бекап создан', f'backups/{path}')
     return proc.communicate(password)
 
