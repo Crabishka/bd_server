@@ -1,17 +1,7 @@
 import os
-import subprocess
 import time
-from datetime import datetime
-from email.utils import format_datetime
-from subprocess import Popen, PIPE
-
 import pexpect
-
 from logic.bd_utils import execute_command
-
-
-def format_datetime(timestamp):
-    return datetime.fromtimestamp(timestamp).strftime('%d.%m.%Y %H:%M:%S')
 
 
 def get_dumps():
@@ -96,6 +86,3 @@ def _restore_schema(host, dbname, user, password, path, **kwargs):
     child.sendline(password)
     child.wait()
     print(f'Бекап {path} восстановлен')
-
-
-

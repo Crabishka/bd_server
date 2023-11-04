@@ -3,9 +3,7 @@ from functools import wraps
 import json
 
 import os
-from logic import restart, dump, get_info, bd_utils, custom_metric
-
-from logic.dump import dump_schema
+from logic import restart, get_info, custom_metric, bd_utils, dump
 
 # костыль
 os.environ['API_KEY'] = "99388f74-a9e9-4461-8186-1cf6cd26deb2"

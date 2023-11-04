@@ -1,10 +1,6 @@
-import os
 import time
-from datetime import date, datetime
 
-import psycopg2 as psycopg2
-
-from bd_utils import get_connection
+from logic.bd_utils import get_connection
 from logic.hardware_utils import get_hardware_utils
 
 sql_item = {

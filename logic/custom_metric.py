@@ -1,10 +1,4 @@
-import os
-import time
-from datetime import datetime, timedelta
-
-import psycopg2
-
-from bd_utils import get_connection
+from logic.bd_utils import get_connection
 
 
 def get_current_long_transaction():
