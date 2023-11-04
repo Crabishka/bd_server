@@ -17,7 +17,7 @@ def dump_schema(path="test.sql"):
 
 
 def restore_schema(path="test.sql"):
-    _dump_schema(
+    _restore_schema(
         os.environ['PGHOSTNAME'],
         os.environ['PGDATABASE'],
         os.environ['PGUSERNAME'],
