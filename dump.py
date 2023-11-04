@@ -40,8 +40,7 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
 
 
 def execute_command(command):
-    command = command
-    proc = Popen(command, shell=False, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+    proc = Popen(command, shell=True)
     res = proc.wait()
     if res:
         raise
@@ -49,6 +48,5 @@ def execute_command(command):
 
 
 def execute_command_with_result(command):
-    command = command
     proc = Popen(command, shell=False, stdin=PIPE, stdout=PIPE, stderr=PIPE)
     return proc
