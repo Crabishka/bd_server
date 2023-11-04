@@ -52,9 +52,10 @@ def get_custom_query(query, parse_fund):
 
 
 def parse_curr_longest_transaction(item):
+
     longest_info = {
         "pid": item['pid'],
-        "query": item['query'],
+        "query": item['query'][:100],
         "datname": item['datname'],
         "duration": item['duration'].total_seconds(),
     }
@@ -64,7 +65,7 @@ def parse_curr_longest_transaction(item):
 def parse_longest_transaction(item):
     longest_info = {
         "count": item['calls'],
-        "query": item['query'],
+        "query": item['query'][:100],
         "duration_sum": int(item['total_exec_time']),
     }
     return longest_info
