@@ -30,11 +30,12 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
         f' -Ft {dbname} '
         f' -f backups/{path}')
     time.sleep(1)
-    password += '\n'
+    password += "\n"
+    print(password)
     proc.communicate(password)
 
     execute_command(
-        f'docker compose -f {bd_docker_compose} cp {bd_docker_name}:/home/postgres/backups/{path} backups/{path}')
+        f'docker compose -f {bd_docker_compose} cp {bd_docker_name}:/backups/{path} backups/{path}')
     execute_command(f'docker compose -f {bd_docker_compose} exec {bd_docker_name} rm backups/{path}')
     print('Бекап создан', f'backups/{path}')
     return
