@@ -1,7 +1,18 @@
 import os
 import time
 import pexpect
+
 from logic.bd_utils import execute_command
+
+
+def get_last_dumps():
+    dumps = get_dumps()
+    dumps.sort(key=get_datetime,reverse=True)
+    return dumps[0] if dumps else None
+
+
+def get_datetime(item):
+    return item["datetime"]
 
 
 def get_dumps():

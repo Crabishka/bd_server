@@ -6,7 +6,7 @@ import os
 from logic import restart, get_info, custom_metric, bd_utils, dump
 
 # костыль
-from logic.dump import dump_schema
+from logic.dump import dump_schema, get_last_dumps
 
 os.environ['API_KEY'] = "99388f74-a9e9-4461-8186-1cf6cd26deb2"
 os.environ['PGHOSTNAME'] = "92.53.127.18"
@@ -64,6 +64,8 @@ def execute():
     command = request.args.get("command")
     parameter = request.args.get("parameter")
     if command == "backup":
+        if parameter is None:
+            parameter = get_last_dumps()['name']
         dump_schema(parameter)
         return 'OK', 200
     if command == "restore":
