@@ -39,8 +39,7 @@ def get_item(item_key):
     cursor = None
     try:
         result = {}
-        now = datetime.now()
-        formatted_date = now.strftime("%d.%m.%Y %H:%M:%S")
+        now = int(time.time())
         connection = psycopg2.connect(
             user=os.environ['PGUSERNAME'],
             password=os.environ['PGPASSWORD'],
@@ -51,7 +50,7 @@ def get_item(item_key):
         cursor = connection.cursor()
         cursor.execute(query)
         rows = cursor.fetchall()
-        result['timestamp'] = formatted_date
+        result['timestamp'] = now
         result['name'] = item_key
         result['value'] = float(rows[0][0])
         return result
