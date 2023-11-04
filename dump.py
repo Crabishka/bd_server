@@ -20,7 +20,7 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
     if bd_docker_name is not None and bd_docker_name != "":
         docker_command_extension = f'docker compose ' \
                                    f'-f {bd_docker_compose}' \
-                                   f'exec {bd_docker_name}'
+                                   f'exec {bd_docker_name} '
 
     command = f'{docker_command_extension}pg_dump --host={host} ' \
               f'--dbname={dbname} ' \
