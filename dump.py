@@ -32,12 +32,13 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
               f' -f backups/{path}'
     print(command, "\n")
     child = pexpect.spawn(command)
-    time.sleep(3)
+    time.sleep(1)
     password += "\n"
     child.sendline(password)
 
-    execute_command(
-        f'docker compose -f {bd_docker_compose} cp {bd_docker_name}:/backups/{path} ./backups')
+    command = f'docker compose -f {bd_docker_compose} cp {bd_docker_name}:/backups/{path} ./backups'
+    print(command)
+    execute_command(command)
     # execute_command(f'docker compose -f {bd_docker_compose} exec {bd_docker_name}  backups/{path}')
     print('Бекап создан', f'backups/{path}')
     return
