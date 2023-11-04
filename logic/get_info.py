@@ -1,3 +1,4 @@
+import string
 import time
 
 from logic.bd_utils import get_connection
@@ -47,7 +48,13 @@ def get_item(item_key):
         rows = cursor.fetchall()
         result['timestamp'] = now
         result['name'] = item_key
-        result['value'] = float(rows[0][0])
+        # да, костыль
+        if item_key == 'Size':
+
+            size = rows[0][0].translate(rows[0][0], string.digits)
+            result['value'] = float(size) * 1024 * 1024 * 8
+        else:
+            result['value'] = float(rows[0][0])
         return result
     except Exception as e:
         print(e)

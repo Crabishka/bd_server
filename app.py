@@ -8,7 +8,7 @@ from logic import restart, get_info, custom_metric, bd_utils, dump
 # костыль
 from logic.dump import dump_schema, get_last_dumps
 
-os.environ['API_KEY'] = "99388f74-a9e9-4461-8186-1cf6cd26deb2"
+os.environ['API_KEY'] = "a768b1d2-0929-469f-bce9-ee6e2c5e6f77"
 os.environ['PGHOSTNAME'] = "92.53.127.18"
 os.environ['PGPORT'] = "5432"
 os.environ['PGUSERNAME'] = "postgres"
