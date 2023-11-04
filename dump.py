@@ -1,9 +1,28 @@
 import os
 import subprocess
 import time
+from datetime import datetime
+from email.utils import format_datetime
 from subprocess import Popen, PIPE
 
 import pexpect
+
+
+def format_datetime(timestamp):
+    return datetime.fromtimestamp(timestamp).strftime('%d.%m.%Y %H:%M:%S')
+
+
+def get_dumps():
+    # заменить на .env
+    path = './backups'
+    result = []
+    for filename in os.listdir(path):
+        file_path = os.path.join(path, filename)
+        file_stat = os.stat(file_path)
+        file_name = os.path.splitext(filename)[0]
+        file_datetime = format_datetime(file_stat.st_mtime)
+        file_info = {"name": file_name, "datetime": file_datetime}
+        result.append(file_info)
 
 
 def dump_schema(path="test.sql"):
