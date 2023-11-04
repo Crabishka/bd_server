@@ -20,7 +20,7 @@ def get_dumps():
         file_path = os.path.join(path, filename)
         file_stat = os.stat(file_path)
         file_name = os.path.splitext(filename)[0]
-        file_datetime = format_datetime(file_stat.st_mtime)
+        file_datetime = format_datetime(file_stat.st_ctime)
         file_info = {"name": file_name, "datetime": file_datetime}
         result.append(file_info)
     return result

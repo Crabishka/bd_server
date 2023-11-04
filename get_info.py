@@ -31,9 +31,6 @@ sql_item = {
     # 'pg_stat_activity': "SELECT * FROM pg_stat_activity"
 }
 
-sql_items_from_file = {
-
-}
 
 
 def get_item(item_key):
