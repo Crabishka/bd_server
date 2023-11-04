@@ -22,7 +22,7 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
     execute_command(f'docker compose -f {bd_docker_compose} exec {bd_docker_name} mkdir -p backups')
 
     proc = execute_command_with_result(
-        f'/var/lib/docker compose -f {bd_docker_compose} '
+        f'/usr/bin/docker compose -f {bd_docker_compose} '
         f'exec {bd_docker_name} '
         f'pg_dump -U {user} '
         f'-h {host}'
