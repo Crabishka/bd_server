@@ -1,4 +1,5 @@
 import os
+import subprocess
 from subprocess import Popen
 
 
@@ -21,12 +22,14 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
         docker_command_extension = f'docker compose ' \
                                    f'-f {bd_docker_compose} ' \
                                    f'exec {bd_docker_name} '
-
-    command = f'{docker_command_extension}pg_dump --host={host} ' \
-              f'--dbname={dbname} ' \
-              f'--username={user} ' \
-              f'--inserts ' \
-              f'> {path} '
-    print(command)
-    proc = Popen(command, shell=False)
-    return proc.communicate(password)
+    process = subprocess.run(['pg_dump', '--dbname', dbname, '--username', user, '--host', host],
+                             env={'PGPASSWORD' : password}
+                             )
+    # command =  f'{docker_command_extension}pg_dump --host={host} ' \
+    #           f'--dbname={dbname} ' \
+    #           f'--username={user} ' \
+    #           f'--inserts ' \
+    #           f'> {path} '
+    # print(command)
+    # proc = Popen(command, shell=False)
+    # return proc.communicate(password)
