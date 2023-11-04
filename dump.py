@@ -73,6 +73,8 @@ def _restore_schema(host, dbname, user, password, path, **kwargs):
     time.sleep(1)
     password += "\n"
     child.sendline(password)
+    child.wait()
+    print(f'Бекап {path} восстановлен')
 
 
 def execute_command(command):
