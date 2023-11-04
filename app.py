@@ -1,6 +1,8 @@
 from flask import Flask, request
 from functools import wraps
 import json
+
+import dump
 import get_info
 import os
 import restart
@@ -42,7 +44,9 @@ def restart_db():
 @app.route('/restore_db')
 @api_key_required
 def restore_db():
-    return 'hello'
+    path = request.get_json()['file']
+    dump.restore_schema(path)
+    return 'OK', 200
 
 
 @app.route('/dump_db')

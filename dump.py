@@ -16,6 +16,16 @@ def dump_schema(path="test.sql"):
     )
 
 
+def restore_schema(path="test.sql"):
+    _dump_schema(
+        os.environ['PGHOSTNAME'],
+        os.environ['PGDATABASE'],
+        os.environ['PGUSERNAME'],
+        os.environ['PGPASSWORD'],
+        path
+    )
+
+
 def _dump_schema(host, dbname, user, password, path, **kwargs):
     # subprocess.call(['sh', './test.sh'])
     bd_docker_name = os.environ['DBDOCKERDBNAME']
@@ -44,15 +54,25 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
     print('Бекап создан', f'backups/{path}')
     return
 
-    # command = f'pg_dump --host={host} ' \
-    #           f'--dbname={dbname} ' \
-    #           f'--username={user} ' \
-    #           f'--inserts ' \
-    #           f'--file=/tmp/schema.dmp ' \
-    #           f'> {path} '
-    # print(command)
-    # proc = Popen(command, shell=False, stdin=PIPE, stdout=PIPE, stderr=PIPE)
-    # return proc.communicate(password)
+
+def _restore_schema(host, dbname, user, password, path, **kwargs):
+    bd_docker_name = os.environ['DBDOCKERDBNAME']
+    bd_docker_compose = os.environ['DBDOCKERLOCATION']
+    print(f'Восстановление бекапа {path}')
+    command = f'docker compose -f {bd_docker_compose} cp ./backups/{path} {bd_docker_name}:/backups'
+    execute_command(command)
+
+    command = f'docker compose -f {bd_docker_compose} ' \
+              f'exec {bd_docker_name} ' \
+              f'pg_restore -U {user} ' \
+              f'-h {host}' \
+              f' -Ft {dbname} ' \
+              f' -f backups/{path}'
+    print(command, "\n")
+    child = pexpect.spawn(command)
+    time.sleep(1)
+    password += "\n"
+    child.sendline(password)
 
 
 def execute_command(command):
