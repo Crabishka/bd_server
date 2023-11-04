@@ -66,7 +66,6 @@ def _restore_schema(host, dbname, user, password, path, **kwargs):
               f'exec {bd_docker_name} ' \
               f'pg_restore -U {user} ' \
               f'-h {host}' \
-              f' -Ft {dbname} ' \
               f' -f backups/{path}'
     print(command, "\n")
     child = pexpect.spawn(command)
