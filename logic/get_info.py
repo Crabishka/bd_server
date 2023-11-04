@@ -57,7 +57,7 @@ def get_info():
         item = get_item(key)
         if item is not None:
             result.append(get_item(key))
-    for key, value in get_hardware_utils():
+    for key, value in get_hardware_utils().items():
         now = int(time.time())
         data = {'timestamp': now, 'name': key, 'value': value}
         result.append(data)
