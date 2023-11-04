@@ -1,5 +1,6 @@
 import os
 import subprocess
+import time
 from subprocess import Popen, PIPE
 
 
@@ -28,6 +29,8 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
         f'-h {host}'
         f' -Ft {dbname} '
         f' -f backups/{path}')
+    print(password)
+    time.sleep(1)
     proc.communicate(password)
 
     execute_command(
