@@ -28,22 +28,21 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
         f'docker compose -f {bd_docker_compose} cp {bd_docker_name}:/home/postgres/backups/{path} backups/{path}')
     # proc = execute_command_with_result(f'/var/lib/docker compose -f {bd_docker_compose} exec {bd_docker_name} rm backups/{path}')
     child = pexpect.spawn(f'/var/lib/docker compose -f {bd_docker_compose} exec {bd_docker_name} rm backups/{path}')
-    child.expect('[pP]assword:')
+    print(child)
     child.sendline(password)
-    print(child.before)
     child.expect(pexpect.EOF)
     print('Бекап создан', f'backups/{path}')
     return
 
-    # command = f'pg_dump --host={host} ' \
-    #           f'--dbname={dbname} ' \
-    #           f'--username={user} ' \
-    #           f'--inserts ' \
-    #           f'--file=/tmp/schema.dmp ' \
+# command = f'pg_dump --host={host} ' \
+#           f'--dbname={dbname} ' \
+#           f'--username={user} ' \
+#           f'--inserts ' \
+#           f'--file=/tmp/schema.dmp ' \
 
-    # print(command)
-    # proc = Popen(command, shell=False, stdin=PIPE, stdout=PIPE, stderr=PIPE)
-    # return proc.communicate(password)
+# print(command)
+# proc = Popen(command, shell=False, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+# return proc.communicate(password)
 
 
 def execute_command(command):
