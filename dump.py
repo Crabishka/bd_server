@@ -9,7 +9,7 @@ def dump_schema(path="test.sql"):
         os.environ['PGDATABASE'],
         os.environ['PGUSERNAME'],
         os.environ['PGPASSWORD'],
-        os.environ['PGBACKUPPATH'] + path
+        path
     )
 
 
