@@ -31,11 +31,10 @@ def get_longest_transaction():
 
 
 def get_custom_query(query, parse_fund):
-    connection = None
+    connection = get_connection()
     cursor = None
     total = []
     try:
-        connection = get_connection()
         cursor = connection.cursor()
         cursor.execute(query)
         rows = cursor.fetchall()
