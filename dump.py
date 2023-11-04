@@ -24,14 +24,15 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
     os.makedirs('./backups', exist_ok=True)
     execute_command(f'docker compose -f {bd_docker_compose} exec {bd_docker_name} mkdir -p backups')
 
-    child = pexpect.spawn(
-        f'docker compose -f {bd_docker_compose} '
-        f'exec {bd_docker_name} '
-        f'pg_dump -U {user} '
-        f'-h {host}'
-        f' -Ft {dbname} '
-        f' -f backups/{path}')
-    time.sleep(1)
+    command = f'docker compose -f {bd_docker_compose} ' \
+              f'exec {bd_docker_name} ' \
+              f'pg_dump -U {user} ' \
+              f'-h {host}' \
+              f' -Ft {dbname} ' \
+              f' -f backups/{path}'
+    print(command, "\n")
+    child = pexpect.spawn(command)
+    time.sleep(3)
     password += "\n"
     child.sendline(password)
 
