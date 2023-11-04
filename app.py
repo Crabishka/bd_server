@@ -2,6 +2,7 @@ from flask import Flask, request
 from functools import wraps
 import json
 
+import bd_utils
 import custom_metric
 import dump
 import get_info
@@ -76,7 +77,7 @@ def execute():
         restart.restart_db()
         return 'OK', 200
     if command == "connection":
-
+        bd_utils.terminate_process(parameter)
         return 'OK', 200
     return 'Not found', 404
 
@@ -100,14 +101,14 @@ def get_dumps():
 @api_key_required
 def get_current_longest_queries():
     result = custom_metric.get_current_long_transaction()
-    return result
+    return json.dumps(result)
 
 
 @app.route('/top_transactions')
 @api_key_required
 def get_longest_queries():
     result = custom_metric.get_longest_transaction()
-    return result
+    return json.dumps(result)
 
 
 if __name__ == '__main__':
