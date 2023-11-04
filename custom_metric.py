@@ -1,17 +1,22 @@
 import os
 import time
+from datetime import datetime, timedelta
 
 import psycopg2
+
+from bd_utils import get_connection
 
 
 def get_current_long_transaction():
     result = get_custom_query(
-        " select pid, query, datname, now() - query_start AS duration"
-        "from pg_stat_activity" 
-        "where state = 'active" 
-        "and now() - query_start > interval '5 second'" 
-        "ORDER BY now() - query_start DESC" 
-        "LIMIT 10;",
+        """
+        select pid, query, datname, now() - query_start AS duration
+        from pg_stat_activity
+        where state = 'active'
+        and now() - query_start > interval '5 second'
+        ORDER BY now() - query_start DESC
+        LIMIT 10;
+        """,
         parse_fund=parse_curr_longest_transaction)
     print(result)
     return result
@@ -30,13 +35,7 @@ def get_custom_query(query, parse_fund):
     cursor = None
     total = []
     try:
-        connection = psycopg2.connect(
-            user=os.environ['PGUSERNAME'],
-            password=os.environ['PGPASSWORD'],
-            host=os.environ['PGHOSTNAME'],
-            port=os.environ['PGPORT'],
-            database=os.environ['PGDATABASE']
-        )
+        connection = get_connection()
         cursor = connection.cursor()
         cursor.execute(query)
         rows = cursor.fetchall()
@@ -59,7 +58,7 @@ def parse_curr_longest_transaction(item):
         "pid": item['pid'],
         "query": item['query'],
         "datname": item['datname'],
-        "duration": item['duration'],
+        "duration": item['duration'].total_seconds(),
     }
     return longest_info
 

@@ -75,7 +75,10 @@ def execute():
     if command == "restart":
         restart.restart_db()
         return 'OK', 200
-    return 'Nor found', 404
+    if command == "connection":
+
+        return 'OK', 200
+    return 'Not found', 404
 
 
 @app.route('/get_metrics')
@@ -93,14 +96,14 @@ def get_dumps():
     return json.dumps(result)
 
 
-@app.route('/long_transactionst')
+@app.route('/long_transactions')
 @api_key_required
 def get_current_longest_queries():
     result = custom_metric.get_current_long_transaction()
     return result
 
 
-@app.route('/longest')
+@app.route('/top_transactions')
 @api_key_required
 def get_longest_queries():
     result = custom_metric.get_longest_transaction()

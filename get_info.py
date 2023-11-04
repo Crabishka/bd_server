@@ -4,6 +4,8 @@ from datetime import date, datetime
 
 import psycopg2 as psycopg2
 
+from bd_utils import get_connection
+
 sql_item = {
     'Alive': "select 1;",  # monitor survival
     'Cache hit ratio': "SELECT sum(heap_blks_hit) / (sum(heap_blks_hit) + sum(heap_blks_read)) as ratio FROM pg_statio_user_tables;",
@@ -39,13 +41,7 @@ def get_item(item_key):
     try:
         result = {}
         now = int(time.time())
-        connection = psycopg2.connect(
-            user=os.environ['PGUSERNAME'],
-            password=os.environ['PGPASSWORD'],
-            host=os.environ['PGHOSTNAME'],
-            port=os.environ['PGPORT'],
-            database=os.environ['PGDATABASE']
-        )
+        connection = get_connection()
         cursor = connection.cursor()
         cursor.execute(query)
         rows = cursor.fetchall()
