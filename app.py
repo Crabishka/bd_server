@@ -8,10 +8,11 @@ from logic.dump import dump_schema, get_last_dumps
 # костыль
 os.environ['API_KEY'] = "a768b1d2-0929-469f-bce9-ee6e2c5e6f77"
 # жесткий костыль
-api_key_storage = ["a768b1d2-0929-469f-bce9-ee6e2c5e6f77", "447de72-1373-4753-b395-d38878416fdf",
-                   "cc2d93f7-4596-43a9-b95d-a3ba59eae766", "a768b1d2-0929-469f-bce9-ee6e2c5e6f77",
-                   "c023957f-2a20-4d2c-b259-ec1fa405c17b",
-                   ]
+api_key_storage = [
+    "a768b1d2-0929-469f-bce9-ee6e2c5e6f77", "447de72-1373-4753-b395-d38878416fdf",
+    "cc2d93f7-4596-43a9-b95d-a3ba59eae766", "a768b1d2-0929-469f-bce9-ee6e2c5e6f77",
+    "c023957f-2a20-4d2c-b259-ec1fa405c17b", "bf0237dd-f108-4f55-ba29-c781a831fd6b"
+]
 os.environ['PGHOSTNAME'] = "92.53.127.18"
 os.environ['PGPORT'] = "5432"
 os.environ['PGUSERNAME'] = "postgres"
