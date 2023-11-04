@@ -21,7 +21,7 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
     os.makedirs('./backups', exist_ok=True)
     execute_command(f'docker compose -f {bd_docker_compose} exec {bd_docker_name} mkdir -p backups')
     execute_command(
-        f'docker compose -f {bd_docker_compose} exec {bd_docker_name} pg_dump -Ft {dbname} -f backups/{path}')
+        f'docker compose -f {bd_docker_compose} exec {bd_docker_name} pg_dump -U {user} -h {host} -Ft {dbname} -f backups/{path}')
     execute_command(
         f'docker compose -f {bd_docker_compose} cp {bd_docker_name}:/home/postgres/backups/{path} backups/{path}')
     proc = execute_command(f'docker compose -f {bd_docker_compose} exec {bd_docker_name} rm backups/{path}')
