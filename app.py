@@ -88,7 +88,7 @@ def get_metrics():
 @app.route('/dumps')
 @api_key_required
 def get_dumps():
-    return tuple(dump.get_dumps())
+    return dump.get_dumps()
 
 
 if __name__ == '__main__':
