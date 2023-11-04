@@ -37,11 +37,10 @@ sql_item = {
 def get_item(item_key):
     query = sql_item[item_key]
     connection = get_connection()
-    cursor = None
+    cursor = connection.cursor()
     try:
         result = {}
         now = int(time.time())
-        cursor = connection.cursor()
         cursor.execute(query)
         rows = cursor.fetchall()
         result['timestamp'] = now
