@@ -23,6 +23,7 @@ def get_dumps():
         file_datetime = format_datetime(file_stat.st_mtime)
         file_info = {"name": file_name, "datetime": file_datetime}
         result.append(file_info)
+    return result
 
 
 def dump_schema(path="test.sql"):
