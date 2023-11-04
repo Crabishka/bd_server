@@ -32,7 +32,6 @@ sql_item = {
 }
 
 
-
 def get_item(item_key):
     query = sql_item[item_key]
     connection = None
@@ -54,33 +53,6 @@ def get_item(item_key):
         result['name'] = item_key
         result['value'] = float(rows[0][0])
         return result
-    except Exception as e:
-        print(e)
-    finally:
-        cursor.close()
-        connection.close()
-
-
-def get_from_file(file_path):
-    with open(file_path, 'r') as f:
-        return get_custom_query(f.read())
-
-
-def get_custom_query(query):
-    connection = None
-    cursor = None
-    try:
-        connection = psycopg2.connect(
-            user=os.environ['PGUSERNAME'],
-            password=os.environ['PGPASSWORD'],
-            host=os.environ['PGHOSTNAME'],
-            port=os.environ['PGPORT'],
-            database=os.environ['PGDATABASE']
-        )
-        cursor = connection.cursor()
-        cursor.execute(query)
-        rows = cursor.fetchall()
-        return rows[0][0]
     except Exception as e:
         print(e)
     finally:

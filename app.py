@@ -2,6 +2,7 @@ from flask import Flask, request
 from functools import wraps
 import json
 
+import custom_metric
 import dump
 import get_info
 import os
@@ -10,7 +11,7 @@ import restart
 from dump import dump_schema
 
 # костыль
-os.environ['API_KEY'] = "bc6eb18d-f242-4cb8-ad04-352fbb879616"
+os.environ['API_KEY'] = "99388f74-a9e9-4461-8186-1cf6cd26deb2"
 os.environ['PGHOSTNAME'] = "92.53.127.18"
 os.environ['PGPORT'] = "5432"
 os.environ['PGUSERNAME'] = "postgres"
@@ -90,6 +91,20 @@ def get_metrics():
 def get_dumps():
     result = dump.get_dumps()
     return json.dumps(result)
+
+
+@app.route('/long_transactionst')
+@api_key_required
+def get_current_longest_queries():
+    result = custom_metric.get_current_long_transaction()
+    return result
+
+
+@app.route('/longest')
+@api_key_required
+def get_longest_queries():
+    result = custom_metric.get_longest_transaction()
+    return result
 
 
 if __name__ == '__main__':
