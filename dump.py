@@ -30,6 +30,7 @@ def _dump_schema(host, dbname, user, password, path, **kwargs):
     child = pexpect.spawn(f'/var/lib/docker compose -f {bd_docker_compose} exec {bd_docker_name} rm backups/{path}')
     child.expect("Password:")
     child.sendline(password)
+    child.wait()
     print('Бекап создан', f'backups/{path}')
     return
 
