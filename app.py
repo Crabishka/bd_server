@@ -34,6 +34,7 @@ def api_key_required(f):
     return wrapped_view
 
 
+# deprecated use execute() instead
 @app.route('/restart_db')
 @api_key_required
 def restart_db():
@@ -41,6 +42,7 @@ def restart_db():
     return 'OK', 200
 
 
+# deprecated use execute() instead
 @app.route('/restore_db')
 @api_key_required
 def restore_db():
@@ -49,6 +51,7 @@ def restore_db():
     return 'OK', 200
 
 
+# deprecated use execute() instead
 @app.route('/dump_db')
 @api_key_required
 def dump_db():
@@ -85,7 +88,7 @@ def get_metrics():
 @app.route('/dumps')
 @api_key_required
 def get_dumps():
-    return dump.get_dumps()
+    return tuple(dump.get_dumps())
 
 
 if __name__ == '__main__':
