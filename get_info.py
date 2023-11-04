@@ -36,12 +36,11 @@ sql_item = {
 
 def get_item(item_key):
     query = sql_item[item_key]
-    connection = None
+    connection = get_connection()
     cursor = None
     try:
         result = {}
         now = int(time.time())
-        connection = get_connection()
         cursor = connection.cursor()
         cursor.execute(query)
         rows = cursor.fetchall()
