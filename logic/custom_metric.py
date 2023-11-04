@@ -18,7 +18,6 @@ def get_current_long_transaction():
         LIMIT 10;
         """,
         parse_fund=parse_curr_longest_transaction)
-    print(result)
     return result
 
 
@@ -26,7 +25,6 @@ def get_longest_transaction():
     result = get_custom_query(
         "SELECT query, calls, total_exec_time FROM pg_stat_statements ORDER BY total_exec_time DESC LIMIT 20",
         parse_fund=parse_longest_transaction)
-    print(result)
     return result
 
 

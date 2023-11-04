@@ -1,4 +1,5 @@
 import os
+from subprocess import Popen
 
 import psycopg2
 
@@ -24,3 +25,11 @@ def get_connection():
         port=os.environ['PGPORT'],
         database=os.environ['PGDATABASE']
     )
+
+
+def execute_command(command):
+    proc = Popen(command, shell=True)
+    res = proc.wait()
+    if res:
+        raise
+    return proc

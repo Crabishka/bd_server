@@ -5,6 +5,7 @@ from datetime import date, datetime
 import psycopg2 as psycopg2
 
 from bd_utils import get_connection
+from logic.hardware_utils import get_hardware_utils
 
 sql_item = {
     'Alive': "select 1;",  # monitor survival
@@ -60,4 +61,8 @@ def get_info():
         item = get_item(key)
         if item is not None:
             result.append(get_item(key))
+    for key, value in get_hardware_utils():
+        now = int(time.time())
+        data = {'timestamp': now, 'name': key, 'value': value}
+        result.append(data)
     return result

@@ -2,14 +2,10 @@ from flask import Flask, request
 from functools import wraps
 import json
 
-import bd_utils
-import custom_metric
-import dump
-import get_info
 import os
-import restart
+from logic import restart, dump, get_info, bd_utils, custom_metric
 
-from dump import dump_schema
+from logic.dump import dump_schema
 
 # костыль
 os.environ['API_KEY'] = "99388f74-a9e9-4461-8186-1cf6cd26deb2"

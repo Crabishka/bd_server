@@ -7,6 +7,8 @@ from subprocess import Popen, PIPE
 
 import pexpect
 
+from logic.bd_utils import execute_command
+
 
 def format_datetime(timestamp):
     return datetime.fromtimestamp(timestamp).strftime('%d.%m.%Y %H:%M:%S')
@@ -22,7 +24,6 @@ def get_dumps():
         file_size = file_stat.st_size
         file_datetime = int(file_stat.st_ctime)
         file_info = {"name": filename, "datetime": file_datetime, "size": file_size}
-        print(file_info)
         result.append(file_info)
     return result
 
@@ -97,14 +98,4 @@ def _restore_schema(host, dbname, user, password, path, **kwargs):
     print(f'Бекап {path} восстановлен')
 
 
-def execute_command(command):
-    proc = Popen(command, shell=True)
-    res = proc.wait()
-    if res:
-        raise
-    return proc
 
-
-def execute_command_with_result(command):
-    proc = Popen(command, shell=True)
-    return proc
