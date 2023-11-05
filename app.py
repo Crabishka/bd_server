@@ -1,5 +1,4 @@
-import jsonfy as jsonfy
-from flask import Flask, request
+from flask import Flask, request,jsonfy
 from functools import wraps
 import json
 import os
