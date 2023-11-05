@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, Response
 from functools import wraps
 import json
 import os
@@ -90,7 +90,11 @@ def execute():
 def get_metrics():
     result = get_info.get_info()
     result = json.dumps(result, default=float)
-    return jsonify(result)
+    return Response(
+        response=result,
+        status=200,
+        content_type='application/json'
+    )
 
 
 @app.route('/dumps')
