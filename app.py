@@ -89,7 +89,7 @@ def execute():
 @api_key_required
 def get_metrics():
     result = get_info.get_info()
-    return jsonify(result, default=float)
+    return jsonify(result)
 
 
 @app.route('/dumps')
