@@ -6,6 +6,7 @@ from subprocess import Popen
 def get_hardware_utils():
     db_docker_name = os.environ['DBDOCKERDBNAME']
     command = f'docker stats --no-stream --format   "{{{{ json . }}}}"  {db_docker_name}'
+    print(command)
     proc = Popen(f'{command} > tmp', shell=True)
     proc.wait()
     data = open('tmp', 'r').read()

@@ -68,11 +68,11 @@ def execute():
     command = request.args.get("command")
     parameter = request.args.get("parameter")
     if command == "backup":
-        if parameter is None:
-            parameter = get_last_dumps()['name']
         dump_schema(parameter)
         return 'OK', 200
     if command == "restore":
+        if parameter is None:
+            parameter = get_last_dumps()['name']
         dump.restore_schema(parameter)
         return 'OK', 200
     if command == "restart":
