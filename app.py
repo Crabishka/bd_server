@@ -1,4 +1,4 @@
-from flask import Flask, request,jsonfy
+from flask import Flask, request, jsonify
 from functools import wraps
 import json
 import os
@@ -89,7 +89,7 @@ def execute():
 @api_key_required
 def get_metrics():
     result = get_info.get_info()
-    return jsonfy(result, default=float)
+    return jsonify(result, default=float)
 
 
 @app.route('/dumps')
