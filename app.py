@@ -11,7 +11,7 @@ os.environ['API_KEY'] = "a768b1d2-0929-469f-bce9-ee6e2c5e6f77"
 api_key_storage = [
     "4385d4c5-7e68-4732-9f0b-7875b03c5581", "99388f74-a9e9-4461-8186-1cf6cd26deb2",
     "005fabb3-8250-48a1-bee4-4eb241fe762d", "dbc3283c-aa39-4c6c-b964-f77b3fc177b4",
-    "2bfeb30d-1ff0-4eee-95a3-5c3c274ef2da"
+    "2bfeb30d-1ff0-4eee-95a3-5c3c274ef2da", "d28da03e-7f4d-4938-958b-d728864aebb0"
 ]
 os.environ['PGHOSTNAME'] = "92.53.127.18"
 os.environ['PGPORT'] = "5432"
