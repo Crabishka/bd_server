@@ -76,17 +76,14 @@ def get_info():
         item = get_item(key)
         if item is not None:
             result.append(get_item(key))
-    for key, value in get_hardware_utils().items():
-        now = int(time.time())
-        max_value = None
-        if '/' in value:
-            splitted = value.split('/')
-            value = re.sub('\D', '', splitted[0].strip())
-            value = _filter_value(value)
-            max_value = _filter_value(splitted[1].strip())
-        else:
-            value = re.sub('\D', '', splitted[0].strip())
-            value = _filter_value(value)
-        data = {'timestamp': now, 'name': key, 'value': value, 'max_value': max_value}
-        result.append(data)
+    hardware_result = get_hardware_utils()
+    now = int(time.time())
+    value = float(hardware_result['CPUPerc'].strip('%'))
+    data = {'timestamp': now, 'name': 'CPUPerc', 'value': value}
+    result.append(data)
+
+    value = float(hardware_result['MemPerc'].strip('%'))
+    data = {'timestamp': now, 'name': 'MemPerc', 'value': value}
+    result.append(data)
+
     return result
