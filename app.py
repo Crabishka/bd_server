@@ -12,7 +12,7 @@ api_key_storage = [
     "a768b1d2-0929-469f-bce9-ee6e2c5e6f77", "447de72-1373-4753-b395-d38878416fdf",
     "cc2d93f7-4596-43a9-b95d-a3ba59eae766", "a768b1d2-0929-469f-bce9-ee6e2c5e6f77",
     "c023957f-2a20-4d2c-b259-ec1fa405c17b", "bf0237dd-f108-4f55-ba29-c781a831fd6b",
-    "87a63eeb-6485-4b77-a6dc-bfb1e599bee7", "8d353a28-03d9-43e5-a036-e6c099f53b23",
+    "87a63eeb-6485-4b77-a6dc-bfb1e599bee7", "b63b7475-619e-44b0-b1ec-fd941606a624",
 ]
 os.environ['PGHOSTNAME'] = "92.53.127.18"
 os.environ['PGPORT'] = "5432"
