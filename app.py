@@ -1,4 +1,4 @@
-from flask import Flask, request, Response
+from flask import Flask, request, Response, jsonify
 from functools import wraps
 import json
 import os
@@ -9,7 +9,7 @@ from logic.dump import dump_schema, get_last_dumps
 os.environ['API_KEY'] = "a768b1d2-0929-469f-bce9-ee6e2c5e6f77"
 # жесткий костыль
 api_key_storage = [
-    "4385d4c5-7e68-4732-9f0b-7875b03c5581",
+    "4385d4c5-7e68-4732-9f0b-7875b03c5581", ""
 ]
 os.environ['PGHOSTNAME'] = "92.53.127.18"
 os.environ['PGPORT'] = "5432"
@@ -98,21 +98,21 @@ def get_metrics():
 @api_key_required
 def get_dumps():
     result = dump.get_dumps()
-    return json.dumps(result)
+    return jsonify(result)
 
 
 @app.route('/long_transactions')
 @api_key_required
 def get_current_longest_queries():
     result = custom_metric.get_current_long_transaction()
-    return json.dumps(result)
+    return jsonify(result)
 
 
 @app.route('/top_transactions')
 @api_key_required
 def get_longest_queries():
     result = custom_metric.get_longest_transaction()
-    return json.dumps(result)
+    return jsonify(result)
 
 
 if __name__ == '__main__':
