@@ -63,6 +63,13 @@ def get_item(item_key):
         connection.close()
 
 
+def _filter_value(value):
+    try:
+        return float("".join(filter(lambda c: c in "1234567890.", value)))
+    except:
+        return 0
+
+
 def get_info():
     result = []
     for key, value in sql_item.items():
@@ -74,7 +81,7 @@ def get_info():
         max_value = None
         if '/' in value:
             splitted = value.split('/')
-            value = splitted[0].strip()
+            value = _filter_value(splitted[0].strip())
             max_value = splitted[1].strip()
         data = {'timestamp': now, 'name': key, 'value': value, 'max_value': max_value}
         result.append(data)
